@@ -10,8 +10,7 @@ const playfair = Playfair_Display({
 const LandingSection = () => {
 	return (
 		<div className="w-full  h-[100svh] min-h-[550px] relative">
-			<div className="w-full h-full absolute inset-0 bg-gradient-to-b from-black via-black/50 to-black/30 -z-10"></div>
-			<div className="fixed pointer-events-none inset-0 flex items-center justify-center bg-black  [mask-image:radial-gradient(ellipse_at_center,transparent_40%,black)] w-full h-full z-20"></div>
+			<div className="w-full h-full absolute inset-0 bg-black/50 -z-10"></div>
 			<video
 				autoPlay
 				muted

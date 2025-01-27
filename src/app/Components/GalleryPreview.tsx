@@ -3,7 +3,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { debounce } from "@/lib/debounce";
 import ImageComponent from "./ImageComponent";
-import { Croissant_One } from "next/font/google";
 import { splitText } from "@/lib/splitText";
 import Cta from "./Cta";
 
@@ -71,23 +70,23 @@ const GalleryPreview = () => {
 				}
 			);
 	}, []);
-	// const animateTextScroller = useCallback(() => {
-	// 	if (!scrolledTextRef.current) return;
+	const animateTextScroller = useCallback(() => {
+		if (!scrolledTextRef.current) return;
 
-	// 	const chars = scrolledTextRef.current.querySelectorAll(
-	// 		".mark > .mark__inner"
-	// 	);
-	// 	gsap
-	// 		.timeline({
-	// 			scrollTrigger: {
-	// 				trigger: gridRef.current,
-	// 				start: "top top",
-	// 				end: "bottom 60%",
-	// 				scrub: true,
-	// 			},
-	// 		})
-	// 		.fromTo(chars, { x: "110vw" }, { x: "-160%", ease: "sine" });
-	// }, []);
+		const chars = scrolledTextRef.current.querySelectorAll(
+			".mark > .mark__inner"
+		);
+		gsap
+			.timeline({
+				scrollTrigger: {
+					trigger: gridRef.current,
+					start: "top top",
+					end: "bottom 60%",
+					scrub: true,
+				},
+			})
+			.fromTo(chars, { x: "110vw" }, { x: "-160%", ease: "sine" });
+	}, []);
 
 	const animateScrollGrid = useCallback(() => {
 		if (!gridRef.current) return;
@@ -110,24 +109,34 @@ const GalleryPreview = () => {
 						filter: "blur(0px) brightness(100%) contrast(100%)",
 					},
 					z: 300,
-					rotateX: 70,
-					rotateZ: leftSide ? 5 : -5,
-					xPercent: leftSide ? -20 : 20,
-					skewX: leftSide ? -20 : 20,
-					yPercent: 100,
-					filter: "blur(7px) brightness(0%) contrast(400%)",
+					yPercent: 400,
+
+					filter: "blur(7px) brightness(50%) contrast(400%)",
 					ease: "sine",
 				})
 				.to(imageWrap, {
 					z: 300,
-					rotateX: -50,
-					rotateZ: leftSide ? -1 : 1,
-					xPercent: leftSide ? -10 : 10,
-					skewX: leftSide ? 10 : -10,
-					filter: "blur(4px) brightness(0%) contrast(500%)",
+					yPercent: leftSide ? -10 : 10,
+					filter: "blur(4px) brightness(50%) contrast(500%)",
 					ease: "sine.in",
+					stagger: {
+						each: 0.6,
+						from: "center",
+					},
 				})
-				.fromTo(imgEl, { scaleY: 1.9 }, { scaleY: 1.9, ease: "sine.in" }, 0);
+				.fromTo(
+					imgEl,
+					{ scaleY: 1.9 },
+					{
+						scaleY: 1.9,
+						ease: "sine.in",
+						stagger: {
+							each: 0.6,
+							from: "center",
+						},
+					},
+					0
+				);
 		});
 	}, []);
 
@@ -138,12 +147,9 @@ const GalleryPreview = () => {
 
 		window.addEventListener("resize", handleResize);
 
-		if (gridRef.current) {
-			animateScrollGrid();
-			// animateTextScroller();
-			animateHeaderText();
-		}
-
+		animateTextScroller();
+		animateHeaderText();
+		animateScrollGrid();
 		ScrollTrigger.refresh();
 
 		return () => {
@@ -154,8 +160,8 @@ const GalleryPreview = () => {
 
 	return (
 		<section
-			className={`$ w-full flex flex-col items-center justify-start  relative bg-black/80 `}>
-			{/* <div
+			className={`$ w-full flex flex-col items-center justify-start  relative bg-black overflow-hidden `}>
+			<div
 				ref={scrolledTextRef}
 				className="mark w-full h-[5rem]  z-10  fixed top-[calc(50%-5rem)] overflow-hidden flex items-center justify-center">
 				<div className="mark__inner flex gap-[6rem] w-max relative translate-x-[100vw] will-change-transform font-alt ">
@@ -172,11 +178,11 @@ const GalleryPreview = () => {
 						</span>
 					))}
 				</div>
-			</div> */}
+			</div>
 
 			<div
 				ref={gridRef}
-				className="grid grid-cols-2 gap-[1rem]  w-full max-w-xl relative mt-[20vh] mb-[10vh] p-6 z-0">
+				className="grid grid-cols-9  gap-[1rem]  w-full  relative  p-6 z-0 ">
 				{images.map((src, index) => (
 					<ImageComponent key={index} src={src} alt={`Image ${index + 1}`} />
 				))}

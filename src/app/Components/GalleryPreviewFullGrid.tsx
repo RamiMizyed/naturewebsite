@@ -5,7 +5,10 @@ import { debounce } from "@/lib/debounce";
 import ImageComponent from "./ImageComponent";
 import { Croissant_One } from "next/font/google";
 import { splitText } from "@/lib/splitText";
-
+import { Syne } from "next/font/google";
+import { SiInstagram } from "react-icons/si";
+import { TiSocialTwitter } from "react-icons/ti";
+const syne = Syne({ subsets: ["latin"] });
 const croissant = Croissant_One({
 	subsets: ["latin"],
 	weight: ["400"],
@@ -38,36 +41,72 @@ const images = [
 const GalleryPreviewFullGrid = () => {
 	const gridRef = useRef<HTMLDivElement | null>(null);
 	const headerTextRef = useRef<HTMLHeadingElement | null>(null);
+	const secondHeaderTextRef = useRef<HTMLHeadingElement | null>(null);
+
 	const animateHeaderText = useCallback(() => {
-		if (!headerTextRef.current) return;
+		if (headerTextRef.current && secondHeaderTextRef.current) {
+			splitText(headerTextRef.current);
+			splitText(secondHeaderTextRef.current);
+			const chars = headerTextRef.current.querySelectorAll(".char");
+			const secondChars = secondHeaderTextRef.current.querySelectorAll(".char");
 
-		splitText(headerTextRef.current);
-		const chars = headerTextRef.current.querySelectorAll(".char");
-
-		gsap
-			.timeline({
-				scrollTrigger: {
-					trigger: headerTextRef.current,
-					start: "top bottom",
-					end: "center center-=25%",
-					scrub: true,
-				},
-			})
-			.fromTo(
-				chars,
-				{ yPercent: 300, autoAlpha: 0, marginRight: "0px" },
-				{
-					ease: "sine",
-					yPercent: 0,
-					autoAlpha: 10,
-					marginRight: "5px",
-					stagger: {
-						each: 0.04,
-						from: "center",
+			gsap
+				.timeline({
+					scrollTrigger: {
+						trigger: headerTextRef.current,
+						start: "top bottom",
+						end: "center center-=5%",
+						scrub: true,
 					},
-				}
-			);
+				})
+				.fromTo(
+					chars,
+					{
+						yPercent: 300,
+						autoAlpha: 0,
+						margin: "0px",
+						color: "white",
+					},
+					{
+						ease: "sine",
+						padding: "0.25rem",
+						color: "white",
+						yPercent: 0,
+						autoAlpha: 1,
+						margin: "5px",
+						stagger: {
+							each: 0.04,
+							from: "center",
+						},
+					}
+				)
+				.fromTo(
+					secondChars,
+					{
+						yPercent: -300,
+						autoAlpha: 0,
+						margin: "0px",
+						backgroundColor: "transparent",
+					},
+					{
+						ease: "sine",
+						backgroundColor: "#f97316 ",
+						color: "transparent",
+						WebkitBackgroundClip: "text",
+						backgroundClip: "text",
+						padding: "0.25rem",
+						yPercent: 0,
+						autoAlpha: 1,
+						margin: "5px",
+						stagger: {
+							each: 0.04,
+							from: "center",
+						},
+					}
+				);
+		}
 	}, []);
+
 	const animateScrollGrid = useCallback(() => {
 		if (!gridRef.current) return;
 		const gridImages = gridRef.current.querySelectorAll(".grid__item-imgwrap");
@@ -115,14 +154,15 @@ const GalleryPreviewFullGrid = () => {
 	}, []);
 
 	useEffect(() => {
+		animateHeaderText();
+		animateScrollGrid();
 		const handleResize = debounce(() => {
 			ScrollTrigger.refresh();
+			animateHeaderText();
+			animateScrollGrid();
 		}, 300);
 
 		window.addEventListener("resize", handleResize);
-
-		animateScrollGrid();
-		animateHeaderText();
 
 		ScrollTrigger.refresh();
 
@@ -134,18 +174,38 @@ const GalleryPreviewFullGrid = () => {
 
 	return (
 		<section
-			className={`${croissant.className} w-full flex flex-col items-center justify-start relative bg-black`}>
-			<h1
-				className="flex uppercase mt-[20vh] text-sm md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-6xl text-white"
-				ref={headerTextRef}>
-				Mountain Quest
-			</h1>
+			className={`${syne.className} w-full flex flex-col items-center justify-start relative bg-black `}>
 			<div
 				ref={gridRef}
-				className="grid grid-cols-3 md:grid-cols-5 mt-[10vh] gap-[1rem] w-full relative  mb-[20vh] overflow-hidden px-[5%] z-0">
+				className="grid grid-cols-3 md:grid-cols-5  gap-[1rem] w-full relative  mb-[10vh] overflow-hidden px-[5%] z-0">
 				{images.map((src, index) => (
 					<ImageComponent key={index} src={src} alt={`Image ${index + 1}`} />
 				))}
+			</div>
+			<div className=" text-center items-center justify-center py-[20vh] w-full h-full flex flex-col gap-4">
+				<h1
+					className="flex uppercase text-white text-[3vw] select-none "
+					ref={headerTextRef}>
+					Mountain
+				</h1>
+				<h1
+					className="flex uppercase text-white text-[3vw] select-none "
+					ref={secondHeaderTextRef}>
+					Quest
+				</h1>
+				<div className=" flex  left-0  z-50 bottom-[50%] justify-start items-center  gap-4">
+					<p className="font-sans font-semibold text-sm select-none">
+						Follow Us
+					</p>
+					<SiInstagram
+						className="text-white hover:scale-105 transition-all cursor-pointer hover:text-orange-400 "
+						size={20}
+					/>
+					<TiSocialTwitter
+						className="text-white hover:scale-105 transition-all cursor-pointer hover:text-orange-400 "
+						size={25}
+					/>
+				</div>
 			</div>
 		</section>
 	);

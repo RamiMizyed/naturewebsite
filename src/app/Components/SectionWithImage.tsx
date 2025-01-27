@@ -10,80 +10,57 @@ const SectionWithImage = () => {
 	const sectionRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		const section = sectionRef.current;
-		if (!section) return;
+		if (!sectionRef.current) return;
+		const textLines = sectionRef.current.querySelectorAll(".line");
 
-		const elements = section.querySelectorAll(".animate");
-
-		elements.forEach((el) => {
-			gsap.fromTo(
-				el,
-				{ opacity: 0, y: 150 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 1,
-					ease: "power4.out",
-					scrollTrigger: {
-						trigger: el,
-						start: "top 80%",
-						end: "bottom 60%",
-						scrub: true,
-					},
-				}
-			);
+		const timeline = gsap.timeline({
+			scrollTrigger: {
+				trigger: sectionRef.current,
+				start: "top bottom",
+				end: "center center-=25%",
+				scrub: 1,
+			},
 		});
+		timeline.fromTo(
+			textLines,
+			{ x: -300, opacity: 0 },
+			{
+				x: 0,
+				opacity: 1,
+				stagger: 0.5,
+				duration: 1.5,
+				ease: "power2.out",
+				background: "transparent",
+			}
+		);
 	}, []);
 
 	return (
 		<div
 			ref={sectionRef}
-			className="w-full h-full px-6 lg:px-[5%] bg-black py-[20vh]">
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-[10vh]">
-				<div className="w-full flex flex-col gap-4 lg:col-span-2 p-6 top-0 animate">
-					<h1 className="text-7xl text-orange-300">01</h1>
-					<h2 className="uppercase">Section Title</h2>
-					<p>Section Description</p>
-					<p>
-						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus
-						explicabo perferendis, laborum ratione amet consequatur odit
-						repellendus accusamus impedit sit voluptatum tempora quidem adipisci
-						maiores quisquam ex quaerat, officiis corrupti.
-					</p>
-					<Cta />
+			className="w-full grid grid-cols-1 lg:grid-cols-3 h-full bg-black px-6 lg:px-[5%]">
+			<div className="flex flex-col gap-4 col-span-1 justify-center lg:col-span-2">
+				<div className="flex items-center gap-4">
+					<h1 className="text-7xl text-orange-300 line ">01</h1>
+					<h2 className="uppercase line">Section Title</h2>
 				</div>
-				<div className="flex items-center justify-center animate">
-					<Image
-						src="/img/15.jpg"
-						alt=""
-						width={500}
-						height={500}
-						className="w-full h-full object-cover rounded-xl"
-					/>
-				</div>
+				<p className="line">Section Description</p>
+				<p className="line max-w-4xl">
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus
+					explicabo perferendis, laborum ratione amet consequatur odit
+					repellendus accusamus impedit sit voluptatum tempora quidem adipisci
+					maiores quisquam ex quaerat, officiis corrupti.
+				</p>
+				<Cta />
 			</div>
-			<div className="grid grid-cols-1 lg:grid-cols-3 mt-[20vh] gap-[10vh]">
-				<div className="w-full animate">
-					<Image
-						src="/img/pexels-roberto-nickson-2559941.jpg"
-						alt=""
-						width={500}
-						height={500}
-						className="w-full h-full object-cover rounded-xl"
-					/>
-				</div>
-				<div className="flex flex-col gap-4 items-start justify-center lg:col-span-2 animate">
-					<h1 className="text-7xl text-orange-300">02</h1>
-					<h2 className="uppercase">Section Title</h2>
-					<p>Section Description</p>
-					<p>
-						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus
-						explicabo perferendis, laborum ratione amet consequatur odit
-						repellendus accusamus impedit sit voluptatum tempora quidem adipisci
-						maiores quisquam ex quaerat, officiis corrupti.
-					</p>
-					<Cta />
-				</div>
+			<div className=" ">
+				<Image
+					className=" "
+					src="/img/pexels-photo-1670187.jpg"
+					alt="Section Image"
+					width={1920}
+					height={1080}
+				/>
 			</div>
 		</div>
 	);
