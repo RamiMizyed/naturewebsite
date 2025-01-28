@@ -39,30 +39,6 @@ const GalleryPreviewFullGrid = () => {
 	const headerTextRef = useRef<HTMLHeadingElement | null>(null);
 	const secondHeaderTextRef = useRef<HTMLHeadingElement | null>(null);
 
-	const waitForImagesToLoad = useCallback(async () => {
-		if (!gridRef.current) return;
-
-		const images = Array.from(
-			gridRef.current.querySelectorAll("img")
-		) as HTMLImageElement[];
-
-		// Wait for all images to load
-		await Promise.all(
-			images.map(
-				(img) =>
-					new Promise((resolve) => {
-						if (img.complete) {
-							// Image is already loaded
-							resolve(true);
-						} else {
-							img.onload = () => resolve(true);
-							img.onerror = () => resolve(true); // Resolve even if an image fails to load
-						}
-					})
-			)
-		);
-	}, []);
-
 	const animateHeaderText = useCallback(() => {
 		if (headerTextRef.current && secondHeaderTextRef.current) {
 			splitText(headerTextRef.current);
@@ -174,10 +150,8 @@ const GalleryPreviewFullGrid = () => {
 	}, []);
 
 	useEffect(() => {
-		waitForImagesToLoad().then(() => {
-			animateHeaderText();
-			animateScrollGrid();
-		});
+		animateHeaderText();
+		animateScrollGrid();
 
 		const handleResize = debounce(() => {
 			ScrollTrigger.refresh();
@@ -193,10 +167,11 @@ const GalleryPreviewFullGrid = () => {
 			window.removeEventListener("resize", handleResize);
 			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 		};
-	}, [animateScrollGrid, waitForImagesToLoad]);
+	}, [animateScrollGrid]);
 
 	return (
 		<section
+			id="Gallery"
 			className={`${syne.className} w-full flex flex-col items-center justify-start relative bg-black `}>
 			<div
 				ref={gridRef}

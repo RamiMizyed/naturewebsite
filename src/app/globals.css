@@ -6,6 +6,9 @@
 	--background: #0a0a0a;
 	--foreground: #ededed;
 }
+html {
+	scroll-behavior: smooth !important;
+}
 @layer utilities {
 	.fade-sides {
 		background: linear-gradient(to right, transparent, #000, #000, transparent);

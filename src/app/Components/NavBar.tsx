@@ -40,11 +40,11 @@ const NavBar = () => {
 				<h5 className="uppercase text-sm font-semibold">Mountain Quest</h5>
 			</Link>
 			<ul className="hidden md:flex gap-3 uppercase text-sm">
-				<a href="/">About</a>
+				<a href="#About">About</a>
 				{"."}
-				<a href="/">Gallery</a>
+				<a href="#Gallery">Gallery</a>
 				{"."}
-				<a href="/">Contact</a>
+				<a href="#Contact">Contact</a>
 			</ul>
 			<div
 				ref={hamburgerRef}

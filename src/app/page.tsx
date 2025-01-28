@@ -43,7 +43,7 @@ export default function Home() {
 	return (
 		<div className="w-full h-full  ">
 			<LandingSection />
-			<div className="flex flex-col gap-[20vh] bg-black py-[20vh]">
+			<div id="About" className="flex flex-col gap-[20vh] bg-black py-[20vh]">
 				{sections.map((section) => (
 					<ExpandImageEffect
 						key={section.index}
@@ -55,8 +55,8 @@ export default function Home() {
 						reverse={section.reverse}
 					/>
 				))}
-				<GalleryPreviewFullGrid />
 			</div>
+			<GalleryPreviewFullGrid />
 			{/* <GalleryPreview /> */}
 		</div>
 	);
