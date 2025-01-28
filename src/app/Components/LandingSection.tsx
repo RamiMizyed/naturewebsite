@@ -11,7 +11,6 @@ const playfair = Playfair_Display({
 const LandingSection = () => {
 	return (
 		<main className="w-full  h-[100svh] min-h-[550px] relative">
-			<div className="w-full h-full absolute inset-0 bg-black/50 -z-10"></div>
 			<video
 				autoPlay
 				muted

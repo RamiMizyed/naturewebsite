@@ -200,7 +200,7 @@ const GalleryPreviewFullGrid = () => {
 			className={`${syne.className} w-full flex flex-col items-center justify-start relative bg-black `}>
 			<div
 				ref={gridRef}
-				className="grid grid-cols-3 md:grid-cols-5  gap-[1rem] w-full relative  mb-[10vh] overflow-hidden px-[5%] z-0">
+				className="grid grid-cols-2 md:grid-cols-5  gap-[1rem] w-full relative  mb-[10vh] overflow-hidden px-[5%] z-0">
 				{images.map((src, index) => (
 					<ImageComponent key={index} src={src} alt={`Image ${index + 1}`} />
 				))}
