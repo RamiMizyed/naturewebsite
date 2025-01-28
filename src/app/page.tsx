@@ -2,6 +2,7 @@
 import LandingSection from "./Components/LandingSection";
 import GalleryPreviewFullGrid from "./Components/GalleryPreviewFullGrid";
 import ExpandImageEffect from "./Components/ExpandImageEffect";
+import Testimonials from "./Components/Testimonials";
 const sections = [
 	{
 		index: 1,
@@ -9,7 +10,7 @@ const sections = [
 		secondTitle: "beauty of nature",
 		description:
 			"Join us for an unforgettable journey as we guide you through the most stunning mountain trails. Whether you're an experienced climber or a novice, we have the ideal tour for you.",
-		imageSrc: "/4763786-hd_1366_720_24fps.mp4",
+		imageSrc: "/img/pexels-roberto-nickson-2559941.jpg",
 	},
 	{
 		index: 2,
@@ -17,7 +18,7 @@ const sections = [
 		secondTitle: "limits and explore",
 		description:
 			"Join us for an exhilarating adventure as we lead you through the most awe-inspiring mountain paths. Whether you're a veteran climber or a beginner, we have the perfect tour for you.",
-		imageSrc: "/4763032-hd_1366_720_24fps.mp4",
+		imageSrc: "/img/pexels-photo-1670187.jpg",
 		reverse: true,
 	},
 	{
@@ -26,7 +27,7 @@ const sections = [
 		secondTitle: "gems and trails",
 		description:
 			"Our expert guides will take you off the beaten path to discover hidden gems and serene landscapes that few have witnessed. Experience the wonders of nature like never before.",
-		imageSrc: "/4763828-sd_506_960_24fps.mp4",
+		imageSrc: "/img/pexels-roberto-nickson-2559941.jpg",
 	},
 	{
 		index: 4,
@@ -34,7 +35,7 @@ const sections = [
 		secondTitle: "thrilling journey",
 		description:
 			"Experience the excitement of adventure as you embark on a thrilling journey through the mountains. Our tours are crafted to challenge and inspire you.",
-		imageSrc: "/4763824-hd_1920_1080_24fps.mp4",
+		imageSrc: "/img/pexels-photo-1670187.jpg",
 		reverse: true,
 	},
 ];

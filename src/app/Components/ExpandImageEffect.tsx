@@ -28,13 +28,13 @@ const SectionBlock: React.FC<SectionBlockProps> = ({
 	reverse,
 }) => {
 	const textRef = useRef<HTMLDivElement | null>(null);
-	const videoRef = useRef<HTMLVideoElement | null>(null);
+	const imageRef = useRef<HTMLImageElement | null>(null);
 	const isMobile = useIsMobile();
 	useEffect(() => {
 		const text = textRef.current;
-		const video = videoRef.current;
+		const img = imageRef.current;
 		console.log(isMobile);
-		if (!text || !video) return;
+		if (!text || !img) return;
 
 		gsap.fromTo(
 			text.children,
@@ -55,7 +55,7 @@ const SectionBlock: React.FC<SectionBlockProps> = ({
 		);
 
 		gsap.fromTo(
-			video,
+			img,
 			{ clipPath: "inset(100% 0 0 0)" },
 			{
 				clipPath: "inset(0% 0 0 0)",
@@ -63,14 +63,10 @@ const SectionBlock: React.FC<SectionBlockProps> = ({
 				delay: 0.25,
 				ease: "power4.out",
 				scrollTrigger: {
-					trigger: text,
+					trigger: img,
 					start: "top 80%",
 					end: "bottom 0%",
-					scrub: false,
-					onEnter: () => video.play(),
-					onLeave: () => video.pause(),
-					onEnterBack: () => video.play(),
-					onLeaveBack: () => video.pause(),
+					scrub: true,
 				},
 			}
 		);
@@ -106,12 +102,12 @@ const SectionBlock: React.FC<SectionBlockProps> = ({
 				<Cta />
 			</div>
 			<div className=" w-full rounded-md object-cover z-10 saturate-0 opacity-30 lg:opacity-100 lg:saturate-100">
-				<video
-					className="w-full h-full"
-					ref={videoRef}
+				<Image
 					src={imageSrc}
-					muted
-					autoPlay
+					alt="section-image"
+					width={900}
+					height={600}
+					ref={imageRef}
 				/>
 			</div>
 		</div>

@@ -3,6 +3,7 @@ import { SiInstagram } from "react-icons/si";
 import { TiSocialTwitter } from "react-icons/ti";
 import { Playfair_Display } from "next/font/google";
 import Cta from "./Cta";
+import Testimonials from "./Testimonials";
 const playfair = Playfair_Display({
 	subsets: ["latin"],
 });
@@ -14,7 +15,8 @@ const LandingSection = () => {
 			<video
 				autoPlay
 				muted
-				src="/4763869-hd_1366_720_24fps (online-video-cutter.com) (1).mp4"
+				poster="/TN.jpg"
+				src="/BG_Video.mp4"
 				className="w-full h-full object-cover blur-sm fixed inset-0 -z-20"
 			/>
 			<div className="w-full h-full flex flex-col items-center justify-center gap-10 z-[999]">
@@ -37,6 +39,7 @@ const LandingSection = () => {
 					size={25}
 				/>
 			</div>
+			<Testimonials />
 		</div>
 	);
 };
