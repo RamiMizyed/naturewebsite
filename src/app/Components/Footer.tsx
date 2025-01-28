@@ -36,16 +36,11 @@ const Nav = () => {
 	return (
 		<div className="flex shrink-0 gap-20 text-secondary ">
 			<div className="flex flex-col items-start gap-2 ">
-				<h3 className="mb-2 uppercase text-secondary">
-					Home
-				</h3>
-				<button className=" text-secondarytransition-all duration-100 ease-in">
-					Projects
-				</button>
+				<h3 className="mb-2 uppercase text-secondary">Home</h3>
+				<a className="">About</a>
 
-				<button className=" text-secondarytransition-all duration-100 ease-in">
-					Gallery
-				</button>
+				<a className="">Gallery</a>
+				<a className="">Contact</a>
 			</div>
 		</div>
 	);

@@ -14,10 +14,10 @@ const StarRating = () => {
 			{ y: 100, opacity: 0 },
 			{
 				y: 0,
-				delay: 1,
+				delay: 0.7,
 				opacity: 1,
 
-				duration: 1,
+				duration: 0.5,
 				ease: "power4.out",
 			}
 		);
@@ -25,8 +25,9 @@ const StarRating = () => {
 
 	return (
 		<div
+			style={{ opacity: 0 }}
 			ref={containerRef}
-			className="text-white px-6 py-4 rounded-lg shadow-lg max-w-sm bg-gray-900 flex items-center space-x-4 absolute bottom-4 right-4 opacity-70 hover:opacity-100 transition-opacity z-50">
+			className="text-white px-6 py-4 rounded-lg shadow-lg max-w-sm bg-gradient-to-br from-teal-950/50 via-teal-900/50 to-green-900/50 flex items-center space-x-4 absolute bottom-4 right-4 z-50">
 			{/* Google Logo */}
 			<svg className="w-12" viewBox="0 0 125 126" fill="none">
 				<path

@@ -63,7 +63,7 @@ p {
 	@apply leading-relaxed  font-normal;
 }
 a {
-	@apply hover:text-orange-500 transition-all duration-300;
+	@apply hover:text-orange-500 transition-all duration-300 cursor-pointer;
 }
 
 /* Highlight specific words */

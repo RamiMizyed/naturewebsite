@@ -3,16 +3,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { debounce } from "@/lib/debounce";
 import ImageComponent from "./ImageComponent";
-import { Croissant_One } from "next/font/google";
 import { splitText } from "@/lib/splitText";
 import { Syne } from "next/font/google";
 import { SiInstagram } from "react-icons/si";
 import { TiSocialTwitter } from "react-icons/ti";
 const syne = Syne({ subsets: ["latin"] });
-const croissant = Croissant_One({
-	subsets: ["latin"],
-	weight: ["400"],
-});
+
 gsap.registerPlugin(ScrollTrigger);
 
 const images = [
@@ -42,6 +38,30 @@ const GalleryPreviewFullGrid = () => {
 	const gridRef = useRef<HTMLDivElement | null>(null);
 	const headerTextRef = useRef<HTMLHeadingElement | null>(null);
 	const secondHeaderTextRef = useRef<HTMLHeadingElement | null>(null);
+
+	const waitForImagesToLoad = useCallback(async () => {
+		if (!gridRef.current) return;
+
+		const images = Array.from(
+			gridRef.current.querySelectorAll("img")
+		) as HTMLImageElement[];
+
+		// Wait for all images to load
+		await Promise.all(
+			images.map(
+				(img) =>
+					new Promise((resolve) => {
+						if (img.complete) {
+							// Image is already loaded
+							resolve(true);
+						} else {
+							img.onload = () => resolve(true);
+							img.onerror = () => resolve(true); // Resolve even if an image fails to load
+						}
+					})
+			)
+		);
+	}, []);
 
 	const animateHeaderText = useCallback(() => {
 		if (headerTextRef.current && secondHeaderTextRef.current) {
@@ -154,8 +174,11 @@ const GalleryPreviewFullGrid = () => {
 	}, []);
 
 	useEffect(() => {
-		animateHeaderText();
-		animateScrollGrid();
+		waitForImagesToLoad().then(() => {
+			animateHeaderText();
+			animateScrollGrid();
+		});
+
 		const handleResize = debounce(() => {
 			ScrollTrigger.refresh();
 			animateHeaderText();
@@ -170,7 +193,7 @@ const GalleryPreviewFullGrid = () => {
 			window.removeEventListener("resize", handleResize);
 			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 		};
-	}, [animateScrollGrid]);
+	}, [animateScrollGrid, waitForImagesToLoad]);
 
 	return (
 		<section
